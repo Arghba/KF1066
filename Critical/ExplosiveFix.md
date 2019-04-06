@@ -1,20 +1,11 @@
 # Genaral Information
-1. Almost all non-hitscan KF weapons can be used to teamkill players.
-2. PipeBombs can be detonated from other players.
-3. PipeBombs can be detonated with high rate of fire weapons to get much more damage than it should in usual circumstaces.
+1. PipeBombs can be detonated with high rate of fire weapons to get much more damage than it should in usual circumstaces.
+2. PipeBombs can be detonated if you throw grenades, do the shoot-go to spectator trick.
+3. PipeBombs can be detonated if NPC walks, you suicide near it.
 4. PipeBombs spam in logs during detonation.
 
 # Exploits reasons
-1. `KFMod/KFPawn.uc#2250`
-```unrealscript
-function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIdx )
-{
-	...
-	// no checks if InstigatedBy is none
-	...
-}
-```
-2. 3.`KFMod/PipeBombProjecile.uc#485`
+1. 2.`KFMod/PipeBombProjecile.uc#485`
 ```unrealscript
 function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector Momentum, class<DamageType> damageType, optional int HitIndex)
 {
@@ -25,6 +16,7 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
 	...
 }
 ```
+3. `KFMod/PipeBombProjecile.uc#485`
 4. You've set default settings in a weird way.
 
 `KFMod/PipeBombProjecile.uc#46`
@@ -44,11 +36,6 @@ static function bool UnloadAssets()
 	...
 }
 ```
-
-## #1: Teamkills
-Because we don't have some important checks inside `TakeDamage(...)` when some one shoots harpoon, orca granade, m99, xbow, flamethrower, etc and go to spectators quickly, projectile hits `Pawns` and *DEALS* damage like it was made by an enemy. It's being used to troll players a lot. Harpoon kills are easies to pull due to it's slow projectiles and delayed detonation.
-
-[Video demonstration #1](STUB!)
 
 ## #2: Pipe Bomb Detonation
 Almost similar to the last case, but happens due to `PipeBombProjecile`'s `TakeDamage(...)`. If do the same trick to your teammates pipes instead of his pawn, it will detonate and make the fly awayyy.
