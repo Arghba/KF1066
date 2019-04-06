@@ -5,7 +5,10 @@ Here are some little thing that can be easily fixed and the won't break any mod 
 Very often saws go out of map / areas where players can reach it, or players itself doesn't pick up them and refill in trader. This leads to tremandous sound spam. You can't destroy them in any way, and have to deal with sound spam for whole game.
 
 ### Proposed Solution
-For level cleanup add this to `KFGameType` -> `State MatchInProgress` -> `#2308: CloseShops()`:
+1. You can just add despawn timer for `CrossbuzzsawBlade`'s. Crossbow arrows despawn and no one dies because of that fact..
+2. If you don't want them to despawn (concerns about low ammo pool, etc) then simply add this code for level cleanup:
+
+`KFMod/KFGameType.uc` -> `State MatchInProgress` -> `#2308: CloseShops()`:
 ```unrealscript
 local CrossbuzzsawBlade CrossbuzzsawBlade;
 
@@ -99,7 +102,7 @@ function DoTrace(Vector Start, Rotator Dir)
 If a lone player joins to empty server as a spectator / usual player and then leave, game thinks that team is wiped and triggers voting -> map switch.
 
 ### Proposed Solution
-Add an additional check to your `KFGameType` -> `#4736: CheckEndGame(...)` so lobby state will be excluded.
+Add an additional check to your `KFMod/KFGameType` -> `#4736: CheckEndGame(...)` so lobby state will be excluded.
 ```unrealscript
 function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 {
@@ -109,3 +112,17 @@ function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
   ...
 }
 ```
+
+# Missing `NotifyGameEvent`
+### Genaral Information
+Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc`, but removed it completely 2-3 patches ago so it can lead to crashes (if you are unlucky on those maps) or get a log spam.
+
+`Warning: Missing Function Function KFMod.KFGameType.NotifyGameEvent`
+
+### Proposed Solution
+Just add a stub function, so at least you won't crash.
+`KFMod/KFGameType.uc`
+```unrealscript.
+function NotifyGameEvent(int EventNumIn);
+```
+
