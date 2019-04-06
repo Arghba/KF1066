@@ -71,7 +71,8 @@ And there are another serious issues with this.
 1. If raged FP touches a zed and it doesnt instagib, it will become unable to hit the players (friendly).
 2. If you kill a FP before it rage animation ends, it will launch all zeds that touch his `FleshPoundAvoidArea` to random directions, sometimes behind you. Very funny to get raged sc at your juicy ass.
 
-[Video demonstration](https://youtu.be/kLd-TJzyzBE)
+[Video demonstration #1](https://youtu.be/kLd-TJzyzBE)
+[Video demonstration #2](https://youtu.be/DoqhCZAykvA)
 
 # Proposed Fixes
 1. Add `bDecapitated` check to deflect damage. 
