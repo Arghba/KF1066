@@ -113,7 +113,7 @@ function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 }
 ```
 
-# Missing `NotifyGameEvent`
+# Missing 'NotifyGameEvent'
 ### Genaral Information
 Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc`, but removed it completely 2-3 patches ago so it can lead to crashes (if you are unlucky on those maps) or get a log spam.
 
@@ -125,4 +125,3 @@ Just add a stub function, so at least you won't crash.
 ```unrealscript.
 function NotifyGameEvent(int EventNumIn);
 ```
-
