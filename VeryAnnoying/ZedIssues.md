@@ -67,6 +67,9 @@ Lines take the good half of the file. It makes navigating and administrating muc
 
 ## #5: Fleshpound Spinning Madness
 When you rage a FP it during it's animation all zeds that touch him will be spinned several times. This makes headshots much much harder to achieve, and for dual, triple FP's almost suicidal mission.
+And there are another serious issues with this.
+1. If raged FP touches a zed and it doesnt instagib, it will become unable to hit the players (friendly).
+2. If you kill a FP before it rage animation ends, it will launch all zeds that touch his `FleshPoundAvoidArea` to random directions, sometimes behind you. Very funny to get raged sc at your juicy ass.
 
 [Video demonstration](https://youtu.be/kLd-TJzyzBE)
 
@@ -156,15 +159,21 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 }
 ```
 
-5. Let's add zed health check and exclude at least FP's.
+5. For less spinning madness let's add zed health check and exclude at least FP's and SC's.
 
 `KFMod/FleshPoundAvoidArea.uc#41`
 ```unrealscript
 function bool RelevantTo(Pawn P)
 {
-    if(KFMonst != none && KFMonst.Health >= 1500)
+    // prevent zeds "avoiding" FP's even after his death
+    // and do not randomly launch them
+    if(KFMonst == none || KFMonst.Health <= 0 )
+        return false;
+    if(KFMonst != none && KFMonst.Health > 1000) //1500 if you want only FP's
         return false;
     return ( KFMonst != none && VSizeSquared(KFMonst.Velocity) >= 75 && Super.RelevantTo(P)
     && KFMonst.Velocity dot (P.Location - KFMonst.Location) > 0  );
 }
 ```
+
+For other collision related issues i can't help :v
