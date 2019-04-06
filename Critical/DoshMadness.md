@@ -73,7 +73,7 @@ Simply add a very small timeout after tossing.
 
 After testing this with friends, we came up with `0.1f`. It prevents any dosh-related lags. But if 2-3 players toss at the same time they still will be able to pass through some blockings. So we have to limit CashPickup amount too - 50. So it's not very restrictive so you still can please your inner Michelangelo:
 
-![Imgur](https://i.imgur.com/ITaG6xL.jpg)
+![A truly majestic piece of art](https://i.imgur.com/ITaG6xL.jpg)
 
 Proposed fix:
 
@@ -94,7 +94,7 @@ exec function TossCash( int Amount )
   }
 
   // all main code inbetween of these
-  
+
   CashTossTimer = Level.TimeSeconds+0.1f;
   if( LongTossCashTimer<Level.TimeSeconds )
   {
