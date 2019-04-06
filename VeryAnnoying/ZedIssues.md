@@ -166,15 +166,11 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 ```unrealscript
 function bool RelevantTo(Pawn P)
 {
-    // prevent zeds "avoiding" FP's even after his death
-    // and do not randomly launch them
-    if(KFMonst == none || KFMonst.Health <= 0 )
-        return false;
-    if(KFMonst != none && KFMonst.Health > 1000) //1500 if you want only FP's
+    if(KFMonst != none && KFMonst.Health >= 1000) //1500 if you want only FP's
         return false;
     return ( KFMonst != none && VSizeSquared(KFMonst.Velocity) >= 75 && Super.RelevantTo(P)
     && KFMonst.Velocity dot (P.Location - KFMonst.Location) > 0  );
 }
 ```
 
-For other collision related issues i can't help :v
+For other collision related issues I even dunno :v
