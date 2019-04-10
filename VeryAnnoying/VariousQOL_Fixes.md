@@ -115,7 +115,7 @@ function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 
 # Missing 'NotifyGameEvent'
 ### Genaral Information
-Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc`, but removed it completely 2-3 patches ago so it can lead to crashes (if you are unlucky on those maps) or get a log spam.
+Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc`, but you removed it completely 2-3 patches ago so it can lead to crashes (if you are unlucky on those maps) or get a log spam.
 
 `Warning: Missing Function Function KFMod.KFGameType.NotifyGameEvent`
 
