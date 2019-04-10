@@ -5,6 +5,7 @@ Here are some little thing that can be easily fixed and the won't break any mod 
 You will get lots of 
 
 `Warning: Failed to load 'Class XGame.xJuggMaleSoundGroup': Failed to find object 'Class XGame.xJuggMaleSoundGroup'`
+
 `Error: KFHumanPawn KF-Hospitalhorrors-LE.KFHumanPawn (Function XGame.xPawn.PlayTakeHit:00A5) Accessed null class context 'SoundGroupClass'`
 
 lines in logs. Happens on every game.
