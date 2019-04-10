@@ -1,5 +1,29 @@
 Here are some little thing that can be easily fixed and the won't break any mod compability or game mechanics.
 
+# GameLenght Controll From MapVote
+### Genaral Information
+Currently you can not change game lenght from map vote, only from web admin / KillingFloor.ini. Because of that you can't have a server with both 7 and 10 wave votings. This complicates things too much and is very illogical.
+
+### Proposed Solution
+`KFMod/KFGameType.uc#658`
+```unrealscript
+event InitGame( string Options, out string Error )
+{
+  ...
+  // try to get the value from commandline
+  // if we fail just use the config value
+  KFGameLength = GetIntOption(Options, "GameLength", KFGameLength);
+  // fallback, if user defines wrong number
+  if(KFGameLength < 0 || KFGameLength > 3)
+  {
+    log("GameLength must be in [0..3]: 0-short, 1-medium, 2-long, 3-custom", class.name);
+    // force long game on worng number
+    KFGameLength = GL_Long;
+  }
+  ...
+}
+```
+
 # KFPawn `SoundGroup` related Log Spam
 ### Genaral Information
 You will get lots of 
