@@ -1,5 +1,38 @@
 Here are some little thing that can be easily fixed and the won't break any mod compability or game mechanics.
 
+# KFPawn `SoundGroup` related Log Spam
+### Genaral Information
+You will get lots of 
+
+`Warning: Failed to load 'Class XGame.xJuggMaleSoundGroup': Failed to find object 'Class XGame.xJuggMaleSoundGroup'`
+`Error: KFHumanPawn KF-Hospitalhorrors-LE.KFHumanPawn (Function XGame.xPawn.PlayTakeHit:00A5) Accessed null class context 'SoundGroupClass'`
+
+lines in logs. Happens on every game.
+
+### Proposed Solution
+`KFMod/KFPawn.uc#190`
+```unrealscript
+simulated function PostBeginPlay()
+{
+  Super(UnrealPawn).PostBeginPlay();
+  // double check if SoundGroupClass is not none
+  if(SoundGroupClass == none)
+    SoundGroupClass = Class'KFMod.KFMaleSoundGroup';
+  // all other code
+}
+```
+`KFMod/KFPawn.uc#3985`
+```unrealscript
+function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
+{
+  ...
+  // yet another check in a function that actually uses sound group
+  if(SoundGroupClass == none)
+    SoundGroupClass = Class'KFMod.KFMaleSoundGroup';
+  ...
+}
+```
+
 # Buzzsaw Projectiles
 ### Genaral Information
 Very often saws go out of map / areas where players can reach it, or players itself doesn't pick up them and refill in trader. This leads to tremandous sound spam. You can't destroy them in any way, and have to deal with sound spam for whole game.
