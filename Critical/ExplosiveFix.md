@@ -106,7 +106,8 @@ function TakeDamage( int Damage, Pawn InstigatedBy, Vector Hitlocation, Vector M
     if ( Monster(InstigatedBy) == none && class<KFWeaponDamageType>(damageType) != none && class<KFWeaponDamageType>(damageType).default.bDealBurningDamage )
         return; // make pipebombs immune to fire, unless instigated by monsters
 
-    super.TakeDamage(Damage, InstigatedBy, Hitlocation, Momentum, damageType, HitIndex);
+    // original pipebomb TakeDamage code
+    ...
 }
 ```
 4. Set defaults inside `defaultproperties`.
