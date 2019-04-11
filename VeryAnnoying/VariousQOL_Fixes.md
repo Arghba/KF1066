@@ -1,4 +1,6 @@
+#
 Here are some little thing that can be easily fixed and the won't break any mod compability or game mechanics.
+#
 
 # GameLenght Controll From MapVote
 ### Genaral Information
@@ -23,6 +25,7 @@ event InitGame( string Options, out string Error )
   ...
 }
 ```
+#
 
 # KFPawn `SoundGroup` related Log Spam
 ### Genaral Information
@@ -57,13 +60,14 @@ function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
   ...
 }
 ```
+#
 
 # Buzzsaw Projectiles
 ### Genaral Information
 Very often saws go out of map / areas where players can reach it, or players itself doesn't pick up them and refill in trader. This leads to tremandous sound spam. You can't destroy them in any way, and have to deal with sound spam for whole game.
 
 ### Proposed Solution
-1. You can just add despawn timer for `CrossbuzzsawBlade`'s. Crossbow arrows despawn and no one dies because of that fact..
+1. Crossbow arrows despawn and no one dies because of that fact. You can just add destroy timer for `CrossbuzzsawBlade`'s - `LifeSpan=80` or anything you find suitable.
 2. If you don't want them to despawn (concerns about low ammo pool, etc) then simply add this code for level cleanup:
 
 `KFMod/KFGameType.uc` -> `State MatchInProgress` -> `#2308: CloseShops()`:
@@ -78,6 +82,7 @@ foreach DynamicActors(class'CrossbuzzsawBlade', CrossbuzzsawBlade)
     CrossbuzzsawBlade.Destroy();
 }
 ```
+#
 
 # Grenades Log Spam
 ### Genaral Information
@@ -107,6 +112,7 @@ defaultproperties
   ExplodeSounds(2)=SoundGroup'KF_GrenadeSnd.Nade_Explode_3'
 }
 ```
+#
 
 # Pickups Log Spam
 ### Genaral Information
@@ -125,6 +131,7 @@ function Destroyed()
   super.Destroyed();
 }
 ```
+#
 
 # Penetrating Pistols Log Spam
 ### Genaral Information
@@ -154,6 +161,7 @@ function DoTrace(Vector Start, Rotator Dir)
   }
 }
 ```
+#
 
 # Inadequate Match End
 ### Genaral Information
@@ -170,6 +178,7 @@ function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
   ...
 }
 ```
+#
 
 # Missing 'NotifyGameEvent'
 ### Genaral Information
@@ -183,3 +192,4 @@ Just add a stub function, so at least you won't crash.
 ```unrealscript.
 function NotifyGameEvent(int EventNumIn);
 ```
+#
