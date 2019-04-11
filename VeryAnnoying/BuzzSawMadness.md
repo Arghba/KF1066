@@ -20,7 +20,7 @@ simulated function Stick(actor HitActor, vector HitLocation)
 4. There is no level cleanup for Buzzsaw Projectiles inside `KFMod/KFGameType.uc#2250 CloseShops()`.
 
 ### Proposed Solution
-1. The most complicated part xD thanks to Poosh's Scrn tho, we have a working solution.
+1. The most complicated part xD thanks to [Poosh's Scrn](https://github.com/poosh/KF-ScrnBalance/blob/master/Classes/ScrnCrossbuzzsawBlade.uc) tho, we have a working solution.
 
 `KFMod/CrossBuzzsawBlade.uc`
 ```unralscript
@@ -36,6 +36,14 @@ simulated function PostNetReceive()
     else if(ImpactActor!=None && Base != ImpactActor)
       GoToState('OnWall');
   }
+}
+
+#357
+simulated function Stick(actor HitActor, vector HitLocation)
+{
+  ...
+  // force replication after we get sticked
+  NetUpdateTime = Level.TimeSeconds - 1;
 }
 
 // new function!
@@ -65,7 +73,31 @@ function Timer()
 {
   Destroy();
 }
+```
+Now start to add our new destroy function to `OnWall` state. And force replication there aswell.
+```unralscript
+simulated state OnWall
+{
+  ...
+  function ProcessTouch (Actor Other, vector HitLocation)
+  {
+    // replace Destroy() with ReplicatedDestroy();
+  }
 
+  simulated function Tick( float Delta )
+  {
+    // new function!
+    if(Base==None)
+      ReplicatedDestroy();
+  }
+
+  simulated function BeginState()
+  {
+    ...
+    // just add this
+    NetUpdateFrequency = 2.0;
+  }
+}
 ```
 #
 
