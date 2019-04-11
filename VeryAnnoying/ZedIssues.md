@@ -4,6 +4,7 @@
 3. Crawler has collision issues.
 4. Zed to zed damage spamms to log, a lot.
 5. Fleshpound makes all zeds to spin like crazy.
+6. Crawler spams in log when huks shoots his fireball near him / you get swarmed by their groups.
 
 # Exploits reasons
 1. `KFChar/ZombieSiren.uc#112 SpawnTwoShots()`
@@ -45,6 +46,7 @@ function bool RelevantTo(Pawn P)
     && KFMonst.Velocity dot (P.Location - KFMonst.Location) > 0  );
 }
 ```
+6. Animation package doesn't have Sequence for some animations.
 
 ## #1: Siren Aftershock
 This happens like 100 times per game. Decapped / dead sirens still deal damage to you. Not the greatest issue especially when they are alone, but when when you get 2-3 sirens from a corner and you know that if you kill them fast right now you will be killed too from their after death screams. And you have to fall back to make distance AND THEN shoot. Or if a player is unaware of this 'feature' he will shoot and die / get wounded to 10-20hp at max.
@@ -74,6 +76,11 @@ And there are another serious issues with this.
 [Video demonstration #1](https://youtu.be/kLd-TJzyzBE)
 
 [Video demonstration #2](https://youtu.be/DoqhCZAykvA)
+
+## #6: Crawler Log Spam
+Just tons of these lines in logs, during every game.
+
+`Log: PlayAnim: Sequence 'Jump' not found for mesh 'Crawler_Freak'`
 
 # Proposed Fixes
 1. Add `bDecapitated` check to deflect damage. 
@@ -178,3 +185,5 @@ function bool RelevantTo(Pawn P)
 }
 ```
 #
+
+6. Fix the Sequence inside KF_Freaks_Trip.ukx / KF_Freaks2_Trip.ukx (don't remember which one xD) or just add a dud one, to prevent the spam.
