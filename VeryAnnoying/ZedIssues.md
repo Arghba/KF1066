@@ -96,6 +96,7 @@ State ZombieDying
 ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, Falling, BreathTimer, Died, RangedAttack, SpawnTwoShots;
 }
 ```
+#
 
 2. Edit `ZombieDying` state so it won't let husks to do any animatin, damage, etc (well since she's dead...).
 `KFChar/ZombieHusk`
@@ -105,6 +106,7 @@ State ZombieDying
 ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, Falling, BreathTimer, Died, RangedAttack, SpawnTwoShots;
 }
 ```
+#
 
 3. Edit crawler's  `PlayDying()` and `ZombieDying` state, so they will disable pawn collision on death.
 
@@ -142,6 +144,7 @@ final function DisablePawnCollision()
 	bBlockHitPointTraces = false;
 }
 ```
+#
 
 4. Add `LastDamagedBy != none` check.
 
@@ -160,18 +163,18 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
     ...
 }
 ```
+#
 
-5. For less spinning madness let's add zed health check and exclude at least FP's and SC's.
+5. For less spinning madness let's add zed health check.
 
 `KFMod/FleshPoundAvoidArea.uc#41`
 ```unrealscript
 function bool RelevantTo(Pawn P)
 {
-    if(KFMonst != none && KFMonst.Health >= 1000) //1500 if you want only FP's
+    if(KFMonst != none && KFMonst.Health >= 1500) //or other suitable value to exclude buffy zeds
         return false;
     return ( KFMonst != none && VSizeSquared(KFMonst.Velocity) >= 75 && Super.RelevantTo(P)
     && KFMonst.Velocity dot (P.Location - KFMonst.Location) > 0  );
 }
 ```
-
-For other collision related issues I even dunno :v
+#
