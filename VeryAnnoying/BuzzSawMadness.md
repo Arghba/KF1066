@@ -20,6 +20,55 @@ simulated function Stick(actor HitActor, vector HitLocation)
 4. There is no level cleanup for Buzzsaw Projectiles inside `KFMod/KFGameType.uc#2250 CloseShops()`.
 
 ### Proposed Solution
+1. The most complicated part xD thanks to Poosh's Scrn tho, we have a working solution.
+
+`KFMod/CrossBuzzsawBlade.uc`
+```unralscript
+#133
+simulated function PostNetReceive()
+{
+  // add a role check
+  if(Role < ROLE_Authority)
+  {
+    // destroy this nonsense imidiately
+    if(bHidden)
+      Destroy();
+    else if(ImpactActor!=None && Base != ImpactActor)
+      GoToState('OnWall');
+  }
+}
+
+// new function!
+// destroy an actor and make sure it will be destroyed on clients too
+simulated function ReplicatedDestroy()
+{
+  if(Level.NetMode == NM_Client || Level.NetMode == NM_StandAlone)
+  {
+    Destroy();
+  }
+  else
+  {
+    // set everything to null
+    bHidden = true;
+    SetCollision(false, false);
+    SetPhysics(PHYS_None);
+    Velocity = vect(0,0,0);
+    Speed = 0;
+    // force it to replicate
+    NetUpdateTime = Level.TimeSeconds - 1;
+    // now destroy
+    SetTimer(1.0, false);
+   }
+}
+
+function Timer()
+{
+  Destroy();
+}
+
+```
+#
+
 2. Add a timer to shut up AmbientSound.
 
 `KFMod/CrossBuzzsawBlade.uc`
@@ -30,7 +79,7 @@ var float ShutMeUpTime;
 #70
 simulated function PostBeginPlay()
 {
-  // add our float and start to count it
+  // add our float and give it a value
   ShutMeUpTime += Level.TimeSeconds;
   ...
 }
@@ -43,8 +92,12 @@ simulated function Tick( float DeltaTime )
   if(AmbientSound != None && ShutMeUpTime > Level.TimeSeconds)
     AmbientSound = None; // make sure I'll shutup
 }
-...
 
+defaultproperties
+{
+  ...
+  ShutMeUpTime=10.0 //seconds sounds reasonable
+}
 ```
 #
 
