@@ -5,7 +5,8 @@
 
 ### Exploits reasons
 
-1. `KFMod/CrossBuzzsawBlade.uc#357`
+1. In general - saws are not being destroyed properly for clients +
+`KFMod/CrossBuzzsawBlade.uc#357`
 ```unrealscript
 simulated function Stick(actor HitActor, vector HitLocation)
 {
