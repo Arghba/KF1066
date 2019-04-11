@@ -62,28 +62,6 @@ function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 ```
 #
 
-# Buzzsaw Projectiles
-### Genaral Information
-Very often saws go out of map / areas where players can reach it, or players itself doesn't pick up them and refill in trader. This leads to tremandous sound spam. You can't destroy them in any way, and have to deal with sound spam for whole game.
-
-### Proposed Solution
-1. Crossbow arrows despawn and no one dies because of that fact. You can just add destroy timer for `CrossbuzzsawBlade`'s - `LifeSpan=80` or anything you find suitable.
-2. If you don't want them to despawn (concerns about low ammo pool, etc) then simply add this code for level cleanup:
-
-`KFMod/KFGameType.uc` -> `State MatchInProgress` -> `#2308: CloseShops()`:
-```unrealscript
-local CrossbuzzsawBlade CrossbuzzsawBlade;
-
-foreach DynamicActors(class'CrossbuzzsawBlade', CrossbuzzsawBlade)
-{
-  if(CrossbuzzsawBlade == none)
-    continue;
-  if(CrossbuzzsawBlade.ImpactActor != none)
-    CrossbuzzsawBlade.Destroy();
-}
-```
-#
-
 # Grenades Log Spam
 ### Genaral Information
 If you throw more than a single nade it will lead to log spam.
