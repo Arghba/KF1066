@@ -16,7 +16,7 @@ simulated function Stick(actor HitActor, vector HitLocation)
 }
 ```
 2. No time limit for shutting up `AmbientSound`.
-3. There is no `LifeSpan` for projectiles or level .
+3. There is no `LifeSpan` for projectiles.
 4. There is no level cleanup for Buzzsaw Projectiles inside `KFMod/KFGameType.uc#2250 CloseShops()`.
 
 ### Proposed Solution
