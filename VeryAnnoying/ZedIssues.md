@@ -48,6 +48,7 @@ function bool RelevantTo(Pawn P)
 }
 ```
 6. Animation package doesn't have Sequence for some animations.
+7. During `SpawnTwoShots()` Husks doesnt check if `Controller` exists or no. For `ToggleAuxCollision()` inside `KFMonster` - no checks if we even have additional collision or no (destroyed, gone, etc).
 
 ## #1: Siren Aftershock
 This happens like 100 times per game. Decapped / dead sirens still deal damage to you. Not the greatest issue especially when they are alone, but when when you get 2-3 sirens from a corner and you know that if you kill them fast right now you will be killed too from their after death screams. And you have to fall back to make distance AND THEN shoot. Or if a player is unaware of this 'feature' he will shoot and die / get wounded to 10-20hp at max.
@@ -85,7 +86,9 @@ Just tons of these lines in logs, during every game.
 
 ## #7: Husk Log Spam
 Lots of lines while kiling husks during their fireball launch animation.
+
 ` Warning: ZombieHusk_STANDARD KF-Westlondon.ZombieHusk_STANDARD (Function KFChar.ZombieHusk.SpawnTwoShots:0135) Accessed None 'Controller'
+
 Warning: ZombieHusk_STANDARD KF-Westlondon.ZombieHusk_STANDARD (Function KFMod.KFMonster.ToggleAuxCollision:0037) Accessed None 'MyExtCollision'
 `
 
@@ -194,6 +197,7 @@ function bool RelevantTo(Pawn P)
 #
 
 6. Fix the Sequence inside KF_Freaks_Trip.ukx / KF_Freaks2_Trip.ukx (don't remember which one xD) or just add a dud one, to prevent the spam.
+#
 
 7. Firstly for `KFMod/KFMonster.uc#776`
 ```unrealscript
@@ -207,11 +211,25 @@ simulated function ToggleAuxCollision(bool newbCollision)
     ...
 }
 ```
-And for `KFChar/ZombieHusk.uc#155`
+And for `KFChar/ZombieHusk.uc#155` add `!= none` checks
 ```unrealscript
 function SpawnTwoShots()
 {
-    
+	...
+	if(Controller != none)
+		FireRotation = Controller.AdjustAim(SavedFireProperties,FireStart,600);
+
+	foreach DynamicActors(class'KFMonsterController', KFMonstControl)
+	{
+        if(Controller == none || KFMonstControl != Controller)
+        {
+            if( PointDistToLine(KFMonstControl.Pawn.Location, vector(FireRotation), FireStart) < 75 )
+            {
+                KFMonstControl.GetOutOfTheWayOfShot(vector(FireRotation),FireStart);
+            }
+        }
+	}
+	....
 }
 ```
-
+#
