@@ -5,6 +5,7 @@
 4. Zed to zed damage spamms to log, a lot.
 5. Fleshpound makes all zeds to spin like crazy.
 6. Crawler spams in log when huks shoots his fireball near him / you get swarmed by their groups.
+7. Husk spams in log while shooting and being killed imidiately after animation starts.
 
 # Exploits reasons
 1. `KFChar/ZombieSiren.uc#112 SpawnTwoShots()`
@@ -81,6 +82,12 @@ And there are another serious issues with this.
 Just tons of these lines in logs, during every game.
 
 `Log: PlayAnim: Sequence 'Jump' not found for mesh 'Crawler_Freak'`
+
+## #7: Husk Log Spam
+Lots of lines while kiling husks during their fireball launch animation.
+` Warning: ZombieHusk_STANDARD KF-Westlondon.ZombieHusk_STANDARD (Function KFChar.ZombieHusk.SpawnTwoShots:0135) Accessed None 'Controller'
+Warning: ZombieHusk_STANDARD KF-Westlondon.ZombieHusk_STANDARD (Function KFMod.KFMonster.ToggleAuxCollision:0037) Accessed None 'MyExtCollision'
+`
 
 # Proposed Fixes
 1. Add `bDecapitated` check to deflect damage. 
@@ -187,3 +194,24 @@ function bool RelevantTo(Pawn P)
 #
 
 6. Fix the Sequence inside KF_Freaks_Trip.ukx / KF_Freaks2_Trip.ukx (don't remember which one xD) or just add a dud one, to prevent the spam.
+
+7. Firstly for `KFMod/KFMonster.uc#776`
+```unrealscript
+// Setters for extra collision cylinders
+simulated function ToggleAuxCollision(bool newbCollision)
+{
+    // lets check if we even have an additional collision
+    // if no just skip this completely
+    if(MyExtCollision == none)
+        return;
+    ...
+}
+```
+And for `KFChar/ZombieHusk.uc#155`
+```unrealscript
+function SpawnTwoShots()
+{
+    
+}
+```
+
