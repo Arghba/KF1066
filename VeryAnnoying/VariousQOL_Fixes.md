@@ -4,7 +4,7 @@ Here are some little thing that can be easily fixed and the won't break any mod 
 
 # GameLenght Controll From MapVote
 ### Genaral Information
-Currently you can not change game lenght from map vote, only from web admin / KillingFloor.ini. Because of that you can't have a server with both 7 and 10 wave votings. This complicates things too much and is very illogical.
+Currently you can not change game lenght (Short, Mid, Long) from map vote, only from web admin / KillingFloor.ini. Because of that you can't have a server with both 7 and 10 wave votings. This complicates things too much and is very illogical.
 
 ### Proposed Solution
 `KFMod/KFGameType.uc#658`
@@ -113,7 +113,9 @@ function Destroyed()
 
 # Weapon Pickups Weird Ammo Calculation
 ### Genaral Information
-If you simply drop a gun (WeaponPickup) other players that will pick it up will also get exact the same ammo that you had. BUT if that gun drops after your death, it's ammo count is reseted to default value D: Its very frustrating when you pick up your own gun after recent wipe and find out that all you ammo is gone and dosh wasted. Or even worse when you pick a gun during kite to find out it has only 1-2 mags.
+1. You drop a drop a gun (WeaponPickup) while not being dead - other players that will pick it up get exact the same ammo that you had.
+2. You die and gun drops - it's ammo count will be reseted to default values D:
+Its very frustrating when you pick up your own gun after recent wipe and find out that all you ammo is gone and dosh wasted. Or even worse when you pick a gun during kite to find out it has only 1-2 mags.
 
 ### Proposed Solution
 We need to edit `GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)` function for `KFMod/KFWeapon.u#1557` and `KFMod/HuskGun.u#158`. It uses `bThrown` flag to check if it was thrown by player or not. But that flag is being set from `DropFrom(vector StartLocation)` and its `True` only if pawn has more than 0 health.. If we simply ignore that flag nothing will change (if we don't count this bugfix).
