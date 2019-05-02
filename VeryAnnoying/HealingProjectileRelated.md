@@ -45,6 +45,47 @@ simulated function Timer()
 ```
 #
 
+1.2. ==============
+```unrealscript
+#241
+simulated function ProcessTouch(Actor Other, Vector HitLocation)
+{
+    ...
+    //local vars
+    ...
+    // before any role check
+    
+    // KFBulletWhipAttachment is attached to KFPawns
+    // so heal him!!
+    if ( ROBulletWhipAttachment(Other) != none ) {
+        Healed = KFHumanPawn(Other.Owner);
+        if ( Healed == none || Healed.Health >= Healed.HealthMax )
+            return;
+    }
+    else
+        Healed = KFHumanPawn(Other);
+
+    if( Healed != none )
+    {
+        if( Role == ROLE_Authority )
+        {
+            // original code
+            ...
+        }
+        else
+        {
+            // client side
+            bHidden = true;
+            SetPhysics(PHYS_None);
+            SetTimer(2.0, false); //give server some time to tell us we're healed somebody, or destroy
+            return;
+        }
+    }
+    Explode(HitLocation,-vector(Rotation));
+}
+```
+#
+
 3. ==============
 ```unrealscript
 // why need to shake nearby players? make this a stub function
