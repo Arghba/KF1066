@@ -28,4 +28,18 @@ defaultproperties
 ```
 #
 
+# Medic Grenade Relevance issue
+### Genaral Information
+If player **A** throws medic grenade behind player **B** -> later won't see green smoke (emitter) if he turns around. 
 
+### Proposed Solution
+`KFMod/Nade.uc#161`
+```unrealscript
+defaultproperties
+{
+  // we need to add this
+  bAlwaysRelevant=True
+  ...
+}
+```
+#
