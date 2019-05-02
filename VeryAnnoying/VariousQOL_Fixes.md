@@ -62,36 +62,6 @@ function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 ```
 #
 
-# Grenades Log Spam
-### Genaral Information
-If you throw more than a single nade it will lead to log spam.
-
-`Error: Nade KF-Corner3WaysFix.Nade (Function KFMod.Nade.Explode:0023) Accessed array 'ExplodeSounds' out of bounds (0/0)`
-
-### Proposed Solution
-1. `KFMod/Nade.uc#79` add a check if we have a corrupted array.
-```unrealscript
-simulated function Explode(vector HitLocation, vector HitNormal)
-{
-  ...
-  // null reference fix
-  if ( ExplodeSounds.length > 0 )
-    PlaySound(ExplodeSounds[rand(ExplodeSounds.length)],,2.0);
-  ...
- }
-```
-2. `KFMod/Nade.uc#380` convert `sound` to `SoundGroup`.
-```unrealscript
-defaultproperties
-{
-  ...
-  ExplodeSounds(0)=SoundGroup'KF_GrenadeSnd.Nade_Explode_1'
-  ExplodeSounds(1)=SoundGroup'KF_GrenadeSnd.Nade_Explode_2'
-  ExplodeSounds(2)=SoundGroup'KF_GrenadeSnd.Nade_Explode_3'
-}
-```
-#
-
 # Weapon Pickup Log Spam
 ### Genaral Information
 **All** weapon pickups that are thrown by a player (or else has `bDropped=true`) spam to log while being destroyed, because `KFMod/KFWeaponPickup.uc#412: Destroyed()` lacks checks if we have inventory or no.
