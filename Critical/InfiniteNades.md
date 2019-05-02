@@ -46,12 +46,12 @@ var float PrevAmmo;  // new variable
 function DoFireEffect()
 {
     local float MaxAmmo,CurAmmo;
-
-	Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
+    
+    Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
     // do not let tossing if we run out of "ammo"
-	if (CurAmmo==0 && PrevAmmo==0)
-		return;
-	PrevAmmo=CurAmmo;
+    if (CurAmmo==0 && PrevAmmo==0)
+        return;
+    PrevAmmo=CurAmmo;
 
     // original code starts from here
     ...
