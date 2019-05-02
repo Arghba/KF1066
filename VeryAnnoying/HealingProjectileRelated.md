@@ -56,6 +56,12 @@ function ShakeView()
 
 4. ==============
 ```unrealscript
-
+defaultproperties
+{
+    // set to 0
+    Damage=0
+    DamageRadius=0
+    ...
+}
 ```
 #
