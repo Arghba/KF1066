@@ -1,79 +1,59 @@
 # General information
 
-There is 
+Hand Grenades doesn't check for ammo count before doing fire effect. Meaning:
 
-1. Ability to bypass collision checks of almost all actors in the level, allowing players to reach the unreachable places.
-2. Instantly kill *any* zeds.
-3. Lag clients, crash servers.
+1. You can bug yourself into "infinite grenade mode".
+2. Spam grenades with several weapons and in result throw more grenades than you carry.
+3. Crash servers with 3rd party cheaty apps.
 
 # Detailed exploits description
 
 ## Exploits reasons
 
-`KFMod/KFPawn.uc#2964`
+`KFMod/FragFire.uc#123`
 
 ```unrealscript
-exec function TossCash( int Amount )
+function DoFireEffect()
 {
-
-    ...
-
-    if( Amount<=0 )
-        Amount = 50;
-    Controller.PlayerReplicationInfo.Score = int(Controller.PlayerReplicationInfo.Score); // To fix issue with throwing 0 pounds.
-    if( Controller.PlayerReplicationInfo.Score<=0 || Amount<=0 )
-        return;
-    Amount = Min(Amount,int(Controller.PlayerReplicationInfo.Score));
-
-    ...
-
+    // no current ammo checks
 }
 ```
 
-1. Not capping the minimum amount of dosh per toss. Which results in the ability to spawn as many `CashPickup` actors as your total dosh amount (by setting pickups value to £1.)
-2. Since there's no timeout for `TossCash` execution, all the money can be tossed out very fast.
+## #1: Infinite Grenades
+Easily can be done in every game. You can see how it's done in demonstration.
 
-## #1: Collision bypass
+[Video demonstration](https://youtu.be/4-lobeyDn4g)
 
-Having tons of `CashPickup` actors concentrated in one spot is very calculation-heavy for the engine. Once the certain amount of actors is reached, the engine starts skipping calculation of collision between some of them. (It's what we came up with.)
+## #2: Throwing more nades than you carry
+Go sharpshooter, equip LAR, spam grenade bind with some easy to find timing -> you can throw 6-10 nades depending how good you kept the timing.
 
-Players can use this to bypass intended map-designers' blocks and reach the unreachable spots by going straight through static meshes, various blocking volumes, etc.
+[Video demonstration](https://youtu.be/7Un8IUtV8mU)
 
-However, this doesn't work with:
-- BSP Geometry
-- Meshes with built-in blocking collision
+## #3: Crashing Servers..Again
+Yup, some magic apps let you do this in every game.
 
-[Video demonstration #1](https://youtu.be/4-lobeyDn4g) ++
-
-[Video demonstration #2](https://youtu.be/fbs7SBHWzlM)
+[Video demonstration](https://youtu.be/icWPlrSpDKQ)
 
 # Proposed solution
 
-Simply add a very small timeout after tossing.
+All three cases can be easily fixed. And we can just call fast grenade tossing with LAR a feature, since with this fix you won't be able to toss more than 5 (your max ammount). 
 
-After testing this with friends, we came up with `0.1f`. It prevents any dosh-related problems with a small exception (about this later) and it's not very restrictive so you still can please your inner Michelangelo:
-
-![A truly majestic piece of art](https://i.imgur.com/ITaG6xL.jpg)
-
-Proposed fix:
-
-`KFMod/KFPawn.uc`
+`KFMod/FragFire.uc#123`
 
 ```unrealscript
-var float AllowedTossCashTime;
+var float PrevAmmo;  // new variable
 
-...
-
-exec function TossCash( int Amount )
+function DoFireEffect()
 {
-  ...
+    local float MaxAmmo,CurAmmo;
 
-  if( Level.TimeSeconds < AllowedTossCashTime )
-    return;
+	Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
+    // do not let tossing if we run out of "ammo"
+	if (CurAmmo==0 && PrevAmmo==0)
+		return;
+	PrevAmmo=CurAmmo;
 
-  ...
-
-  AllowedTossCashTime = Level.TimeSeconds + 0.1f;
+    // original code starts from here
+    ...
 }
 ```
-
