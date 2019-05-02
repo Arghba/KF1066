@@ -111,6 +111,26 @@ function Destroyed()
 ```
 #
 
+# Weapon Pickups Weird Ammo Calculation
+### Genaral Information
+If you simply drop a gun (WeaponPickup) other players that will pick it up will also get exact the same ammo that you had. BUT if that gun drops after your death, it's ammo count is reseted to default value D: Its very frustrating when you pick up your own gun after recent wipe and find out that all you ammo is gone and dosh wasted. Or even worse when you pick a gun during kite to find out it has only 1-2 mags.
+
+### Proposed Solution
+We need to edit `GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)` function for `KFMod/KFWeapon.u#1557` and `KFMod/HuskGun.u#158`. It uses `bThrown` flag to check if it was thrown by player or not. But that flag is being set from `DropFrom(vector StartLocation)` and its `True` only if pawn has more than 0 health.. If we simply ignore that flag nothing will change (if we don't count this bugfix).
+
+```unrealscript
+function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
+{
+    ...
+    InitialAmount = FireMode[m].AmmoClass.Default.InitialAmount;
+    
+    if(WP!=none) // remove WP.bThrown==true check
+        InitialAmount = WP.AmmoAmount[m];
+    ...
+}
+```
+#
+
 # Penetrating Pistols Log Spam
 ### Genaral Information
 You will get huge log spam while playing with mk / deagle / magnum / their dual variants.
