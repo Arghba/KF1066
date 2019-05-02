@@ -9,9 +9,10 @@
 3. This is almost as annoying as the first case. You just stand near another player, medic decides to heal him -> your screen, aim starts to shake, nice! Target players will play teleport effect (i.e. the shake) anyways, so why you force nearby players to shake to D:
 
 ### Proposed Solution
-1. `KFMod/HealingProjectile.uc#70`
+1. `KFMod/HealingProjectile.uc`
 
 ```unrealscript
+#70
 simulated function PostNetReceive()
 {
     if( bHidden && !bHitHealTarget )
@@ -28,9 +29,21 @@ simulated function PostNetReceive()
         // (c) PooSH
     }
 }
+
+#135
+simulated function Timer()
+{
+    if ( Role == ROLE_Authority)
+        super.Timer();
+    // client side stuff
+    // Didn't receive HealingLocation from the Server - Destoy
+    else if ( !bHitHealTarget )
+        Destroy();
+}
 ```
 
 3. `KFMod/HealingProjectile.uc#140`
+
 ```unrealscript
 // why need to shake nearby players? make this a stub function
 function ShakeView()
