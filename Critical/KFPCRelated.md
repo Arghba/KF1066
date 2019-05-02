@@ -1,8 +1,5 @@
 # General information
-You can buy 2nd variant of every pickup
-1. You can bug yourself into "infinite grenade mode".
-2. Spam grenades with several weapons and in result throw more grenades than you carry.
-3. Crash servers with 3rd party cheaty apps.
+1. You can buy any variant of every weapon (camo, gold, neon, etc) at the same time with vanilla variant - you can have Neon, Gold, usual AK's, or golden AA12 + usual AA12, or Camo m32 + usual m32, etc. Many of this 'loadouts' have separate ammo pools, meaning you can double your firepower and achieve monstreous DPS / ammo count.
 
 # Detailed exploits description
 
