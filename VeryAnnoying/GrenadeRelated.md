@@ -30,7 +30,7 @@ defaultproperties
 
 # Medic Grenade Relevance issue
 ### Genaral Information
-If player **A** throws medic grenade behind player **B** -> later won't see green smoke (emitter) if he turns around. 
+If player **A** throws medic grenade behind player **B** -> later won't see green smoke (emitter) if he turns around. This is related to all grenade types, it's just most visible on healing ones, since players "ignore" you medic grenades (that you threw behind them) and cause many gameplay issues.
 
 ### Proposed Solution
 `KFMod/Nade.uc#161`
