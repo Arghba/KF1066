@@ -92,9 +92,9 @@ defaultproperties
 ```
 #
 
-# Pickups Log Spam
+# Weapon Pickup Log Spam
 ### Genaral Information
-**All** pickups that are thrown by a player (or else has `bDropped=true`) spam to log while being destroyed, because `KFMod/KFWeaponPickup.uc#412: Destroyed()` lacks checks if we have inventory or no.
+**All** weapon pickups that are thrown by a player (or else has `bDropped=true`) spam to log while being destroyed, because `KFMod/KFWeaponPickup.uc#412: Destroyed()` lacks checks if we have inventory or no.
 
 `Warning: MK23Pickup KF-WinLondon.MK23Pickup (Function KFMod.KFWeaponPickup.Destroyed:0019) Accessed None 'Inventory'`
 
