@@ -15,16 +15,16 @@ No restrictions for dosh tossing over a short period of time results in the foll
 ```cpp
 exec function TossCash( int Amount )
 {
-    ...
+  ...
 
-    if( Amount<=0 )
-        Amount = 50;
-    Controller.PlayerReplicationInfo.Score = int(Controller.PlayerReplicationInfo.Score); // To fix issue with throwing 0 pounds.
-    if( Controller.PlayerReplicationInfo.Score<=0 || Amount<=0 )
-        return;
-    Amount = Min(Amount,int(Controller.PlayerReplicationInfo.Score));
+  if (Amount<=0)
+    Amount = 50;
+  Controller.PlayerReplicationInfo.Score = int(Controller.PlayerReplicationInfo.Score); // To fix issue with throwing 0 pounds.
+  if (Controller.PlayerReplicationInfo.Score<=0 || Amount<=0)
+    return;
+  Amount = Min(Amount,int(Controller.PlayerReplicationInfo.Score));
 
-    ...
+  ...
 }
 ```
 
@@ -38,6 +38,7 @@ Having tons of `CashPickup` actors concentrated in one spot is very calculation-
 Players can use this to bypass intended map-designers' blocks and reach the unreachable spots by going straight through static meshes, various blocking volumes, etc.
 
 However, this doesn't work with:
+
 - BSP Geometry
 - Meshes with built-in blocking collision
 
@@ -65,7 +66,7 @@ If you have 4k or more, you don't even need to look at your feet.
 
 [Video demonstration](https://youtu.be/NGwXY79Ka0c)
 
-# Proposed solution
+## Proposed solution
 
 Simply add a very small timeout after tossing.
 
@@ -82,11 +83,11 @@ var float AllowedTossCashTime;
 
 ...
 
-exec function TossCash( int Amount )
+exec function TossCash(int Amount)
 {
   ...
 
-  if( Level.TimeSeconds < AllowedTossCashTime )
+  if (Level.TimeSeconds < AllowedTossCashTime)
     return;
 
   ...
@@ -114,13 +115,13 @@ If you want this completely fixed, you should restrict players to have no more t
   {
     ...
 
-    if( Level.TimeSeconds < AllowedTossCashTime || (Level.TimeSeconds < WindowEndTossCashTime && WindowTossCashCount > 25) )
+    if (Level.TimeSeconds < AllowedTossCashTime || (Level.TimeSeconds < WindowEndTossCashTime && WindowTossCashCount > 25))
       return;
 
     ...
 
     AllowedTossCashTime = Level.TimeSeconds + 0.1f;
-    if( WindowEndTossCashTime < Level.TimeSeconds )
+    if (WindowEndTossCashTime < Level.TimeSeconds)
     {
       WindowEndTossCashTime = Level.TimeSeconds + 8.5f;
       WindowTossCashCount = 0;
