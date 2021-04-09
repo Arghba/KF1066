@@ -1,7 +1,7 @@
 * **Welcome**
 
   * [Read Me](README)
-  * [To Do](to-do.md)
+  * [To Do](todo.md)
 
 * **Critical**
 

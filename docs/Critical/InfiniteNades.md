@@ -6,16 +6,16 @@ Hand Grenades doesn't check for ammo count before doing fire effect. Meaning:
 2. Spam grenades with several weapons and in result throw more grenades than you carry.
 3. Crash servers with 3rd party cheaty apps.
 
-# Detailed exploits description
+## Detailed exploits description
 
 ## Exploits reasons
 
 `KFMod/FragFire.uc#123`
 
-```unrealscript
+```cpp
 function DoFireEffect()
 {
-    // no current ammo checks
+  // no current ammo checks
 }
 ```
 
@@ -40,20 +40,20 @@ All three cases can be easily fixed. And we can just call fast grenade tossing w
 
 `KFMod/FragFire.uc#123`
 
-```unrealscript
+```cpp
 var float PrevAmmo;  // new variable
 
 function DoFireEffect()
 {
-    local float MaxAmmo,CurAmmo;
+  local float MaxAmmo,CurAmmo;
     
-    Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
-    // do not let tossing if we run out of "ammo"
-    if (CurAmmo==0 && PrevAmmo==0)
-        return;
-    PrevAmmo=CurAmmo;
+  Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
+  // do not let tossing if we run out of "ammo"
+  if (CurAmmo==0 && PrevAmmo==0)
+    return;
+  PrevAmmo=CurAmmo;
 
-    // original code starts from here
-    ...
+  // original code starts from here
+  ...
 }
 ```

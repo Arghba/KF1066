@@ -16,8 +16,8 @@ Shooting pipes with certain weapons causes them to explode several times potenti
 
 Put this at the very top of `TakeDamage` method:
 
-```unrealscript
-if ( bTriggered )
+```cpp
+  if (bTriggered)
     return;
 ```
 
@@ -55,21 +55,21 @@ Yet again, no checks inside `KFMod/PipeBombProjecile.uc#134 (function Timer)` ->
 
 ## Proposed solution
 
-```unrealscript
+```cpp
 function Timer()
 {
-    local bool bSameTeam;
+  local bool bSameTeam;
+
+  ...
+
+  foreach VisibleCollidingActors( ... )
+  {
+    bSameTeam = KF_StoryNPC(CheckPawn) != none || (CheckPawn.PlayerReplicationInfo != none && CheckPawn.PlayerReplicationInfo.Team.TeamIndex == PlacedTeam);
 
     ...
+  }
 
-    foreach VisibleCollidingActors( ... )
-    {
-        bSameTeam = KF_StoryNPC(CheckPawn) != none || (CheckPawn.PlayerReplicationInfo != none && CheckPawn.PlayerReplicationInfo.Team.TeamIndex == PlacedTeam);
-
-        ...
-    }
-
-    ...
+  ...
 }
 ```
 
@@ -89,22 +89,22 @@ The pipe's core is sunk inside some mesh and ray tracing done by `foreach Visibl
 
 Do ray tracing from half a meter higher than the pipe bomb's actual location.
 
-```unrealscript
+```cpp
 function Timer()
 {
-    local vector DetectLocation;
+  local vector DetectLocation;
 
-    DetectLocation = Location;
-    DetectLocation.Z += 25;
+  DetectLocation = Location;
+  DetectLocation.Z += 25;
 
+  ...
+
+  foreach VisibleCollidingActors( class 'Pawn', CheckPawn, DetectionRadius, DetectLocation )
+  {
     ...
+  }
 
-    foreach VisibleCollidingActors( class 'Pawn', CheckPawn, DetectionRadius, DetectLocation )
-    {
-        ...
-    }
-
-    ...
+  ...
 }
 ```
 
@@ -114,7 +114,7 @@ function Timer()
 
 Every pipe leaves the following log message on explode:
 
-```
+```cpp
 PipeBombProjectile KF-ThrillsChills.PipeBombProjectile (Function KFMod.PipeBombProjectile.Explode:005D) Accessed array 'ExplodeSounds' out of bounds (0/0)
 ```
 
@@ -124,10 +124,10 @@ PipeBombProjectile KF-ThrillsChills.PipeBombProjectile (Function KFMod.PipeBombP
 
 ## Proposed solution
 
-```unrealscript
+```cpp
 defaultproperties
 {
-    ExplodeSounds(0)=SoundGroup'Inf_Weapons.antitankmine.antitankmine_explode01'
-    ...
+  ExplodeSounds(0)=SoundGroup'Inf_Weapons.antitankmine.antitankmine_explode01'
+  ...
 }
 ```

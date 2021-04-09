@@ -1,16 +1,17 @@
 # General information
+
 1. You can buy any variant of every weapon (camo, gold, neon, etc) at the same time with vanilla variant - you can have Neon, Gold, usual AK's, or golden AA12 + usual AA12, or Camo m32 + usual m32, etc. Many of this 'loadouts' have separate ammo pools, meaning you can double your firepower and achieve monstreous DPS / ammo count.
 
-# Detailed exploits description
+## Detailed exploits description
 
 ## Exploits reasons
 
 `KFMod/FragFire.uc#123`
 
-```unrealscript
+```cpp
 function DoFireEffect()
 {
-    // no current ammo checks
+  // no current ammo checks
 }
 ```
 
@@ -35,21 +36,20 @@ All three cases can be easily fixed. And we can just call fast grenade tossing w
 
 `KFMod/FragFire.uc#123`
 
-```unrealscript
+```cpp
 var float PrevAmmo;  // new variable
 
 function DoFireEffect()
 {
-    local float MaxAmmo,CurAmmo;
+  local float MaxAmmo,CurAmmo;
     
-    Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
-    // do not let tossing if we run out of "ammo"
-    if (CurAmmo==0 && PrevAmmo==0)
-        return;
-    PrevAmmo=CurAmmo;
+  Weapon.GetAmmoCount(MaxAmmo,CurAmmo);
+  // do not let tossing if we run out of "ammo"
+  if (CurAmmo==0 && PrevAmmo==0)
+    return;
+  PrevAmmo=CurAmmo;
 
-    // original code starts from here
-    ...
+  // original code starts from here
+  ...
 }
 ```
-

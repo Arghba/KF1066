@@ -6,16 +6,15 @@ No restrictions for dosh tossing over a short period of time results in the foll
 2. Instantly kill *any* zeds.
 3. Lag clients, crash servers.
 
-# Detailed exploits description
+## Detailed exploits description
 
-## Exploits reasons
+### Exploits reasons
 
 `KFMod/KFPawn.uc#2964`
 
-```unrealscript
+```cpp
 exec function TossCash( int Amount )
 {
-
     ...
 
     if( Amount<=0 )
@@ -26,7 +25,6 @@ exec function TossCash( int Amount )
     Amount = Min(Amount,int(Controller.PlayerReplicationInfo.Score));
 
     ...
-
 }
 ```
 
@@ -79,7 +77,7 @@ Proposed fix:
 
 `KFMod/KFPawn.uc`
 
-```unrealscript
+```cpp
 var float AllowedTossCashTime;
 
 ...
@@ -102,9 +100,11 @@ However, collision bypass won't be completely fixed. The bypass threshold for so
 We still consider this a nice tradeoff between pleasant tossing experience and 0.01% of the playerbase who will be able to abuse this exploit. Keeping in mind that all other nasty dosh exploits are fixed.
 
 If you want this completely fixed, you should restrict players to have no more than ~25 dosh pickups per ~8.5 seconds window. This is definitely not a very pleasant experience. You have 2 ways to achieve this:
+
 - Simply raise the tossing timeout to `0.35f`.
 - Additionally restrict tossing to 25 pickups per 8.5 seconds window.
-  ```unrealscript
+
+```cpp
   var float AllowedTossCashTime, WindowEndTossCashTime;
   var byte WindowTossCashCount;
 
@@ -128,5 +128,6 @@ If you want this completely fixed, you should restrict players to have no more t
     else
       ++WindowTossCashCount;
   }
-  ```
+```
+
 - Oh, and you can probably tweak something in the engine to prevent bypass exploit from happening.

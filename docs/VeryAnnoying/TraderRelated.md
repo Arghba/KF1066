@@ -1,4 +1,5 @@
 # Genaral Information
+
 On most custom maps and even on some official ones you get huge amount of log spam.
 
 `Warning: ShopVolume KF-Manor.ShopVolume3 (Function KFMod.ShopVolume.Touch:0088) Accessed None 'MyTrader'`
@@ -11,23 +12,25 @@ On most custom maps and even on some official ones you get huge amount of log sp
 
 And sometimes you will get `Accessed None 'Other'` if someone leaves game / suicides during trading.
 
-### Bug reasons
+## Bug reasons
+
 Many authors don't use `WeaponLocker` aka Trader models (nigga or 3d printer) for their traders. And `ShopVolume`s keep calling for non existing `WeaponLocker` and spam in chat.
 
 ### Proposed Solution
+
 We need to add checks if we even have `WeaponLocker`s nearby and if there are none just skip their calls - trader sounds, reactions etc.
 
 `KFMod/ShopVolume.uc`
-```unralscript
+```cpp
 #18
 function Touch( Actor Other )
 {
   // to prevent accessed none warnings
-  if(Other == none)
+  if (Other == none)
     return;
   ....
   // add a check if we even have a weaponlocker or no
-  if(MyTrader != none)
+  if (MyTrader != none)
     MyTrader.SetOpen(true);
   ...
 }
@@ -36,10 +39,10 @@ function Touch( Actor Other )
 function UnTouch( Actor Other )
 {
   // to prevent accessed none warnings
-  if(Other == none)
+  if (Other == none)
     return;
   // add a check if we even have a weaponlocker or no
-  if(MyTrader != none && Pawn(Other)!=None && PlayerController(Pawn(Other).Controller)!=None && KFGameType(Level.Game)!=None)
+  if (MyTrader != none && Pawn(Other)!=None && PlayerController(Pawn(Other).Controller)!=None && KFGameType(Level.Game)!=None)
     MyTrader.SetOpen(false);
 }
 
@@ -49,15 +52,15 @@ function UsedBy(Pawn user)
   local string traderTag;
 
   // to prevent accessed none warnings
-  if(user == none || KFHumanPawn(user) == none)
+  if (user == none || KFHumanPawn(user) == none)
     return;
   // Set the pawn to an idle anim so he wont keep making footsteps
   User.SetAnimAction(User.IdleWeaponAnim);
 
-  if( KFPlayerController(user.Controller)!=None && KFGameType(Level.Game)!=None && !KFGameType(Level.Game).bWaveInProgress )
+  if (KFPlayerController(user.Controller)!=None && KFGameType(Level.Game)!=None && !KFGameType(Level.Game).bWaveInProgress)
   {
     // add a check if we even have a weaponlocker or no
-    if(MyTrader != none)
+    if (MyTrader != none)
       traderTag = string(MyTrader.Tag);
     else
       traderTag = "WeaponLocker"; // since we have none set it to something
@@ -66,4 +69,3 @@ function UsedBy(Pawn user)
   }
 }
 ```
-#

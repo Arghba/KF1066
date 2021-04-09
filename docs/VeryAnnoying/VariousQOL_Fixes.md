@@ -1,14 +1,15 @@
-#
-Here are some little thing that can be easily fixed and the won't break any mod compability or game mechanics.
-#
+# Genaral Information
 
-# GameLenght Controll From MapVote
-### Genaral Information
+Here are some little thing that can be easily fixed and the won't break any mod compability or game mechanics.
+
+## GameLenght Controll From MapVote
+
 Currently you can not change game lenght (Short, Mid, Long) from map vote, only from web admin / KillingFloor.ini. Because of that you can't have a server with both 7 and 10 wave votings. This complicates things too much and is very illogical.
 
 ### Proposed Solution
+
 `KFMod/KFGameType.uc#658`
-```unrealscript
+```cpp
 event InitGame( string Options, out string Error )
 {
   ...
@@ -25,10 +26,9 @@ event InitGame( string Options, out string Error )
   ...
 }
 ```
-#
 
-# KFPawn `SoundGroup` related Log Spam
-### Genaral Information
+## KFPawn `SoundGroup` related Log Spam
+
 You will get lots of 
 
 `Warning: Failed to load 'Class XGame.xJuggMaleSoundGroup': Failed to find object 'Class XGame.xJuggMaleSoundGroup'`
@@ -38,39 +38,41 @@ You will get lots of
 lines in logs. Happens on every game.
 
 ### Proposed Solution
+
 `KFMod/KFPawn.uc#190`
-```unrealscript
+```cpp
 simulated function PostBeginPlay()
 {
   Super(UnrealPawn).PostBeginPlay();
   // double check if SoundGroupClass is not none
-  if(SoundGroupClass == none)
+  if (SoundGroupClass == none)
     SoundGroupClass = Class'KFMod.KFMaleSoundGroup';
   // all other code
 }
 ```
+
 `KFMod/KFPawn.uc#3985`
-```unrealscript
+```cpp
 function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 {
   ...
   // yet another check in a function that actually uses sound group
-  if(SoundGroupClass == none)
+  if (SoundGroupClass == none)
     SoundGroupClass = Class'KFMod.KFMaleSoundGroup';
   ...
 }
 ```
-#
 
-# Weapon Pickup Log Spam
-### Genaral Information
+## Weapon Pickup Log Spam
+
 **All** weapon pickups that are thrown by a player (or else has `bDropped=true`) spam to log while being destroyed, because `KFMod/KFWeaponPickup.uc#412: Destroyed()` lacks checks if we have inventory or no.
 
 `Warning: MK23Pickup KF-WinLondon.MK23Pickup (Function KFMod.KFWeaponPickup.Destroyed:0019) Accessed None 'Inventory'`
 
 ### Proposed Solution
+
 `KFMod/KFWeaponPickup.uc#412: Destroyed()` add a check for `Inventory != none`.
-```unrealscript
+```cpp
 function Destroyed()
 {
   if ( bDropped && Inventory != none && KFGameType(Level.Game) != none )
@@ -79,32 +81,31 @@ function Destroyed()
   super.Destroyed();
 }
 ```
-#
 
-# Weapon Pickups Weird Ammo Calculation
-### Genaral Information
+## Weapon Pickups Weird Ammo Calculation
+
 1. You drop a drop a gun (WeaponPickup) while not being dead - other players that will pick it up get exact the same ammo that you had.
 2. You die and gun drops - it's ammo count will be reseted to default values D:
 Its very frustrating when you pick up your own gun after recent wipe and find out that all you ammo is gone and dosh wasted. Or even worse when you pick a gun during kite to find out it has only 1-2 mags.
 
 ### Proposed Solution
+
 We need to edit `GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)` function for `KFMod/KFWeapon.u#1557` and `KFMod/HuskGun.u#158`. It uses `bThrown` flag to check if it was thrown by player or not. But that flag is being set from `DropFrom(vector StartLocation)` and its `True` only if pawn has more than 0 health.. If we simply ignore that flag nothing will change (if we don't count this bugfix).
 
-```unrealscript
+```cpp
 function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
 {
-    ...
-    InitialAmount = FireMode[m].AmmoClass.Default.InitialAmount;
+  ...
+  InitialAmount = FireMode[m].AmmoClass.Default.InitialAmount;
     
-    if(WP!=none) // remove WP.bThrown==true check
-        InitialAmount = WP.AmmoAmount[m];
-    ...
+  if (WP!=none) // remove WP.bThrown==true check
+    InitialAmount = WP.AmmoAmount[m];
+  ...
 }
 ```
-#
 
-# Penetrating Pistols Log Spam
-### Genaral Information
+## Penetrating Pistols Log Spam
+
 You will get huge log spam while playing with mk / deagle / magnum / their dual variants.
 
 `Warning: GoldenDeagleFire KF-WinHospital.GoldenDeagle.GoldenDeagleFire0 (Function KFMod.DeagleFire.DoTrace:04BB) Accessed None 'IgnoreActors'`
@@ -112,54 +113,54 @@ You will get huge log spam while playing with mk / deagle / magnum / their dual 
 Happens because some zeds (`IgnoreActors`) get killed right after they get traced, but before we set their collisions. In result we got `none` errors.
 
 ### Proposed Solution
+
 You need to add `IgnoreActors != none` check for all these classes `KFMod/DeagleFire.uc`, `Dual44MagnumFire.uc`, `DualDeagleFire.uc`, `DualMK23Fire.uc`, `Magnum44Fire.uc`, `MK23Fire.uc` inside `function DoTrace(Vector Start, Rotator Dir)`.
 
-```unrealscript
+```cpp
 function DoTrace(Vector Start, Rotator Dir)
 {
   ...
   // these lines are end the very end
   // Turn the collision back on for any actors we turned it off
-  if ( IgnoreActors.Length > 0 )
+  if (IgnoreActors.Length > 0)
   {
     for (i=0; i<IgnoreActors.Length; i++)
     {
-      if(IgnoreActors[i] == none)
+      if (IgnoreActors[i] == none)
         continue;
       IgnoreActors[i].SetCollision(true);
     }
   }
 }
 ```
-#
 
-# Inadequate Match End
-### Genaral Information
+## Inadequate Match End
+
 If a lone player joins to empty server as a spectator / usual player and then leave, game thinks that team is wiped and triggers voting -> map switch.
 
 ### Proposed Solution
+
 Add an additional check to your `KFMod/KFGameType` -> `#4736: CheckEndGame(...)` so lobby state will be excluded.
-```unrealscript
+```cpp
 function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 {
   ...
-  if(Level.Game.IsInState('PendingMatch'))
+  if (Level.Game.IsInState('PendingMatch'))
     return false;
   ...
 }
 ```
-#
 
-# Missing 'NotifyGameEvent'
-### Genaral Information
+## Missing 'NotifyGameEvent'
+
 Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc`, but you removed it completely 2-3 patches ago so it can lead to crashes (if you are unlucky on those maps) or get a log spam.
 
 `Warning: Missing Function Function KFMod.KFGameType.NotifyGameEvent`
 
 ### Proposed Solution
+
 Just add a stub function, so at least you won't crash.
 `KFMod/KFGameType.uc`
-```unrealscript.
+```cpp.
 function NotifyGameEvent(int EventNumIn);
 ```
-#

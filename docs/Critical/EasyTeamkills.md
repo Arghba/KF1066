@@ -6,11 +6,11 @@ A lot of weapons can by used for that, but harpoon is the most viable option, si
 
 TODO: video demonstration
 
-# Exploit reason
+## Exploit reason
 
 `KFMod/KFPawn.uc#2250`
 
-```unrealscript
+```cpp
 function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIdx )
 {
   ...
@@ -20,11 +20,11 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 }
 ```
 
-# Proposed solution
+## Proposed solution
 
 Since you are going to edit `KFPawn` to fix dosh exploits
 
-```unrealscript
+```cpp
 function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIdx )
 {
   // local vars
