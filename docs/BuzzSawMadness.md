@@ -9,6 +9,7 @@
 1. In general - saws are not being destroyed properly for clients +
 
 `KFMod/CrossBuzzsawBlade.uc#357`
+
 ```clike
 simulated function Stick(actor HitActor, vector HitLocation)
 {
@@ -22,9 +23,11 @@ simulated function Stick(actor HitActor, vector HitLocation)
 4. There is no level cleanup for Buzzsaw Projectiles inside `KFMod/KFGameType.uc#2250 CloseShops()`.
 
 ### Proposed Solution
+
 1. The most complicated part xD thanks to [Poosh's Scrn](https://github.com/poosh/KF-ScrnBalance/blob/master/Classes/ScrnCrossbuzzsawBlade.uc) tho, we have a working solution.
 
 `KFMod/CrossBuzzsawBlade.uc`
+
 ```clike
 #133
 simulated function PostNetReceive()
@@ -107,6 +110,7 @@ simulated state OnWall
 2. Add a timer to shut up AmbientSound.
 
 `KFMod/CrossBuzzsawBlade.uc`
+
 ```clike
 // add our shutup float
 var float ShutMeUpTime;
@@ -136,11 +140,11 @@ defaultproperties
 ```
 
 3. Crossbow arrows despawn and no one dies because of that fact. You can just add destroy timer inside `CrossbuzzsawBlade.uc#408 defaultproperties{}` - `LifeSpan=80`. Or 60, 70, whatever you find more suitable.
-#
 
 4. If you don't want them to despawn (concerns about low ammo pool, etc) then simply add this code for level cleanup:
 
 `KFMod/KFGameType.uc` -> `State MatchInProgress` -> `#2250: CloseShops()`:
+
 ```clike
 local CrossbuzzsawBlade CrossbuzzsawBlade;
 

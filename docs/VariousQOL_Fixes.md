@@ -9,6 +9,7 @@ Currently you can not change game lenght (Short, Mid, Long) from map vote, only 
 ### Proposed Solution
 
 `KFMod/KFGameType.uc#658`
+
 ```clike
 event InitGame( string Options, out string Error )
 {
@@ -40,6 +41,7 @@ lines in logs. Happens on every game.
 ### Proposed Solution
 
 `KFMod/KFPawn.uc#190`
+
 ```clike
 simulated function PostBeginPlay()
 {
@@ -52,6 +54,7 @@ simulated function PostBeginPlay()
 ```
 
 `KFMod/KFPawn.uc#3985`
+
 ```clike
 function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 {
@@ -72,6 +75,7 @@ function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 ### Proposed Solution
 
 `KFMod/KFWeaponPickup.uc#412: Destroyed()` add a check for `Inventory != none`.
+
 ```clike
 function Destroyed()
 {
@@ -141,6 +145,7 @@ If a lone player joins to empty server as a spectator / usual player and then le
 ### Proposed Solution
 
 Add an additional check to your `KFMod/KFGameType` -> `#4736: CheckEndGame(...)` so lobby state will be excluded.
+
 ```clike
 function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 {
@@ -161,6 +166,7 @@ Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc
 
 Just add a stub function, so at least you won't crash.
 `KFMod/KFGameType.uc`
+
 ```clike.
 function NotifyGameEvent(int EventNumIn);
 ```

@@ -9,6 +9,7 @@ If you throw more than a single nade it will lead to log spam.
 ### Proposed Solution
 
 1. `KFMod/Nade.uc#79` add a check if we have a corrupted array.
+
 ```clike
 simulated function Explode(vector HitLocation, vector HitNormal)
 {
@@ -41,6 +42,7 @@ If player **A** throws medic grenade behind player **B** -> later won't see gree
 ### Proposed Solution
 
 `KFMod/Nade.uc#161`
+
 ```clike
 defaultproperties
 {

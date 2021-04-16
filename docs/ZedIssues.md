@@ -11,6 +11,7 @@
 ## Exploits reasons
 
 1. `KFChar/ZombieSiren.uc#112 SpawnTwoShots()`
+
 ```clike
 simulated function SpawnTwoShots()
 {

@@ -15,12 +15,13 @@
 ### Proposed Solution
 
 `KFMod/HealingProjectile.uc`
-1. ==============
+1. 
+
 ```clike
 #70
 simulated function PostNetReceive()
 {
-  if( bHidden && !bHitHealTarget )
+  if (bHidden && !bHitHealTarget)
   {
     // use only HealLocation
     if (HealLocation != vect(0,0,0))
@@ -47,7 +48,8 @@ simulated function Timer()
 }
 ```
 
-1.2. ==============
+1.2.
+
 ```clike
 #241
 simulated function ProcessTouch(Actor Other, Vector HitLocation)
@@ -88,15 +90,15 @@ simulated function ProcessTouch(Actor Other, Vector HitLocation)
 }
 ```
 
-3. ==============
+3. 
+
 ```clike
-// why need to shake nearby players? make this a stub function
-function ShakeView()
-{
-}
+// why do we even shake nearby players? convert this to a stub
+function ShakeView(){}
 ```
 
-4. ==============
+4. 
+
 ```clike
 defaultproperties
 {
