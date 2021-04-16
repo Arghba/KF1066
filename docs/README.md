@@ -4,7 +4,11 @@ This repository contains crucial info for fixing several game breaking / game ki
 
 I've made separate markdown documents for each exploit, so this doesn't become a mess and you could easily find the code.
 
-UPD: I'ts half finished and put into a stasis, since TWI doesn't care if this exists.
+## To Do
+
+0. UPD: I'ts half finished and put into a stasis, since TWI doesn't care if this exists.
+1. Accelerated players (jumps from several shit) accelerate them and lead to one hit zed kills.
+2. Projectiles vs players / zeds.
 
 ## Credits
 

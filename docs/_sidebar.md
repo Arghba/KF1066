@@ -1,22 +1,21 @@
 * **Welcome**
 
-  * [Read Me](README)
-  * [To Do](todo.md)
+  * [Read Me](README.md)
 
 * **Critical**
 
-  * [**Dosh Madness**](../Critical/DoshMadness.md)
-  * [**Easy Teamkills**](../Critical/EasyTeamkills.md)
-  * [**Infinite Nades**](../Critical/InfiniteNades.md)
-  * [**PlayerController Related**](../Critical/KFPCRelated.md)
-  * [**Pipe Shenanigans**](../Critical/PipeShenanigans.md)
-  * [**SteamID Bypass**](../Critical/SteamIDBypass.md)
+  * [**Dosh Madness**](DoshMadness.md)
+  * [**Easy Teamkills**](EasyTeamkills.md)
+  * [**Infinite Nades**](InfiniteNades.md)
+  * [**PlayerController Related**](KFPCRelated.md)
+  * [**Pipe Shenanigans**](PipeShenanigans.md)
+  * [**SteamID Bypass**](SteamIDBypass.md)
 
 * **Very Annoying**
 
-  * [**BuzzSawMadness**](../VeryAnnoying/BuzzSawMadness.md)
-  * [**GrenadeRelated**](../VeryAnnoying/GrenadeRelated.md)
-  * [**HealingProjectileRelated**](../VeryAnnoying/HealingProjectileRelated.md)
-  * [**TraderRelated**](../VeryAnnoying/TraderRelated.md)
-  * [**VariousQOL_Fixes**](../VeryAnnoying/VariousQOL_Fixes.md)
-  * [**ZedIssues**](../VeryAnnoying/ZedIssues.md)
+  * [**BuzzSawMadness**](BuzzSawMadness.md)
+  * [**GrenadeRelated**](GrenadeRelated.md)
+  * [**HealingProjectileRelated**](HealingProjectileRelated.md)
+  * [**TraderRelated**](TraderRelated.md)
+  * [**VariousQOL_Fixes**](VariousQOL_Fixes.md)
+  * [**ZedIssues**](ZedIssues.md)
