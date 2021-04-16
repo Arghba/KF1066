@@ -10,4 +10,4 @@ This repository contains crucial info for fixing several game breaking / game ki
 
 ## Credits
 
-[Marco](https://steamcommunity.com/profiles/76561197975509070), [Poosh](http://steamcommunity.com/profiles/76561197992537591), [bIbIbI(rus)](https://steamcommunity.com/profiles/76561198019079140), [dkanus](http://steamcommunity.com/profiles/76561198025127722), [ScaryGhosts](http://steamcommunity.com/profiles/76561197961630515).
+[Marco](https://steamcommunity.com/profiles/76561197975509070), [Poosh](https://steamcommunity.com/profiles/76561197992537591), [bIbIbI(rus)](https://steamcommunity.com/profiles/76561198019079140), [dkanus](https://steamcommunity.com/profiles/76561198025127722), [ScaryGhosts](https://steamcommunity.com/profiles/76561197961630515).
