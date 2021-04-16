@@ -36,9 +36,9 @@ simulated function PostNetReceive()
   if(Role < ROLE_Authority)
   {
     // destroy this nonsense imidiately
-    if(bHidden)
+    if (bHidden)
       Destroy();
-    else if(ImpactActor!=None && Base != ImpactActor)
+    else if (ImpactActor!=None && Base != ImpactActor)
       GoToState('OnWall');
   }
 }
@@ -55,7 +55,7 @@ simulated function Stick(actor HitActor, vector HitLocation)
 // destroy an actor and make sure it will be destroyed on clients too
 simulated function ReplicatedDestroy()
 {
-  if(Level.NetMode == NM_Client || Level.NetMode == NM_StandAlone)
+  if (Level.NetMode == NM_Client || Level.NetMode == NM_StandAlone)
   {
     Destroy();
   }
@@ -94,7 +94,7 @@ simulated state OnWall
   simulated function Tick( float Delta )
   {
     // new function!
-    if(Base==None)
+    if (Base == None)
       ReplicatedDestroy();
   }
 
@@ -128,7 +128,7 @@ simulated function Tick( float DeltaTime )
 {
   ...
   // shut me up when i reach the time limit!
-  if(AmbientSound != None && ShutMeUpTime > Level.TimeSeconds)
+  if (AmbientSound != None && ShutMeUpTime > Level.TimeSeconds)
     AmbientSound = None; // make sure I'll shutup
 }
 
@@ -150,9 +150,9 @@ local CrossbuzzsawBlade CrossbuzzsawBlade;
 
 foreach DynamicActors(class'CrossbuzzsawBlade', CrossbuzzsawBlade)
 {
-  if(CrossbuzzsawBlade == none)
+  if (CrossbuzzsawBlade == none)
     continue;
-  if(CrossbuzzsawBlade.ImpactActor != none)
+  if (CrossbuzzsawBlade.ImpactActor != none)
     CrossbuzzsawBlade.Destroy();
 }
 ```

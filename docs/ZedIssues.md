@@ -16,7 +16,7 @@
 simulated function SpawnTwoShots()
 {
   // no checks if we are decapped or no
-  if  bZapped)
+  if (bZapped)
   {
     return;
   }
@@ -68,7 +68,7 @@ This happens like 100 times per game. Decapped / dead sirens still deal damage t
 
 Ok, this can be funny. But let's not forget that their fireballs move ALL zeds and make them jump if it explodes. A husk comes behind a far corner / building, starts to charge his weapon of doom, you kill it and.... fireball still flies to you, meanwhile moving all zeds and messing your aim.
 
-[Video demonstration]()
+[Video demonstration](STUB!)
 
 ## #3: Crawler bodyblocking
 
@@ -145,7 +145,7 @@ ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, 
 }
 ```
 
-3. Edit crawler's  `PlayDying()` and `ZombieDying` state, so they will disable pawn collision on death.
+3. Edit crawler's `PlayDying()` and `ZombieDying` state, so they will disable pawn collision on death.
 
 `KFChar/ZombieCrawler`
 

@@ -99,7 +99,7 @@ function Timer()
 
   ...
 
-  foreach VisibleCollidingActors( class 'Pawn', CheckPawn, DetectionRadius, DetectLocation )
+  foreach VisibleCollidingActors(class 'Pawn', CheckPawn, DetectionRadius, DetectLocation)
   {
     ...
   }

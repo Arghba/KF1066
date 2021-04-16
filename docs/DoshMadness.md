@@ -17,10 +17,10 @@ exec function TossCash( int Amount )
 {
   ...
 
-  if (Amount<=0)
+  if (Amount <= 0)
     Amount = 50;
   Controller.PlayerReplicationInfo.Score = int(Controller.PlayerReplicationInfo.Score); // To fix issue with throwing 0 pounds.
-  if (Controller.PlayerReplicationInfo.Score<=0 || Amount<=0)
+  if (Controller.PlayerReplicationInfo.Score <= 0 || Amount <= 0)
     return;
   Amount = Min(Amount,int(Controller.PlayerReplicationInfo.Score));
 

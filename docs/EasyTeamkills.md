@@ -11,7 +11,7 @@ TODO: video demonstration
 `KFMod/KFPawn.uc#2250`
 
 ```clike
-function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIdx )
+function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIdx)
 {
   ...
   // InstigatedBy == none if player became spectator, and there are no checks for that.
@@ -31,36 +31,36 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
   // before any calculation and even before super.TakeDamage()
 
   // just in case
-  if ( Damage <= 0 )
+  if (Damage <= 0)
     return;
 
   // copy-pasted from KFHumanPawn to check for nones
-  if( Controller!=None && Controller.bGodMode )
+  if (Controller!=None && Controller.bGodMode)
     return;
 
   KFDamType = class<KFWeaponDamageType>(damageType);
-  if ( InstigatedBy == none )
+  if (InstigatedBy == none)
   {
     // Player received non-zombie KF damage from unknown source.
     // Let's assume that it is friendly damage, e.g. from just
     disconnected/crashed/cheating teammate
     // and ignore it.
-    if ( KFDamType != none && class<DamTypeZombieAttack (KFDamType) == none )
+    if (KFDamType != none && class<DamTypeZombieAttack (KFDamType) == none)
       return;
     }
   else
   {
-    if ( KFMonster(InstigatedBy) != none )
+    if (KFMonster(InstigatedBy) != none)
     {
       KFMonster(InstigatedBy).bDamagedAPlayer = true;
     }
-    else if( KFHumanPawn(InstigatedBy) != none )
+    else if (KFHumanPawn(InstigatedBy) != none)
     {
       InstigatorPRI = KFPlayerReplicationInfo(InstigatedBy.PlayerReplicationInfo);
       // Don't allow momentum from a player shooting a player
       Momentum = vect(0,0,0);
       // no damage from spectators (i.e. fire missile -> spectate -> missile hits player
-      if ( InstigatorPRI != none && InstigatorPRI.bOnlySpectator )
+      if (InstigatorPRI != none && InstigatorPRI.bOnlySpectator)
         return;
     }
 

@@ -18,7 +18,7 @@ event InitGame( string Options, out string Error )
   // if we fail just use the config value
   KFGameLength = GetIntOption(Options, "GameLength", KFGameLength);
   // fallback, if user defines wrong number
-  if(KFGameLength < 0 || KFGameLength > 3)
+  if (KFGameLength < 0 || KFGameLength > 3)
   {
     log("GameLength must be in [0..3]: 0-short, 1-medium, 2-long, 3-custom", class.name);
     // force long game on worng number
@@ -30,13 +30,14 @@ event InitGame( string Options, out string Error )
 
 ## KFPawn `SoundGroup` related Log Spam
 
-You will get lots of 
+You will get lots of:
 
-`Warning: Failed to load 'Class XGame.xJuggMaleSoundGroup': Failed to find object 'Class XGame.xJuggMaleSoundGroup'`
+```clike
+Warning: Failed to load 'Class XGame.xJuggMaleSoundGroup': Failed to find object 'Class XGame.xJuggMaleSoundGroup'
+Error: KFHumanPawn KF-Hospitalhorrors-LE.KFHumanPawn (Function XGame.xPawn.PlayTakeHit:00A5) Accessed null class context 'SoundGroupClass'
+```
 
-`Error: KFHumanPawn KF-Hospitalhorrors-LE.KFHumanPawn (Function XGame.xPawn.PlayTakeHit:00A5) Accessed null class context 'SoundGroupClass'`
-
-lines in logs. Happens on every game.
+Happens on every game.
 
 ### Proposed Solution
 

@@ -15,7 +15,7 @@ simulated function Explode(vector HitLocation, vector HitNormal)
 {
   ...
   // null reference fix
-  if ( ExplodeSounds.length > 0 )
+  if (ExplodeSounds.length > 0)
     PlaySound(ExplodeSounds[rand(ExplodeSounds.length)],,2.0);
   ...
  }
