@@ -9,7 +9,7 @@
 1. In general - saws are not being destroyed properly for clients +
 
 `KFMod/CrossBuzzsawBlade.uc#357`
-```cpp
+```clike
 simulated function Stick(actor HitActor, vector HitLocation)
 {
   // doesn't forcet netupdate on sticking
@@ -25,7 +25,7 @@ simulated function Stick(actor HitActor, vector HitLocation)
 1. The most complicated part xD thanks to [Poosh's Scrn](https://github.com/poosh/KF-ScrnBalance/blob/master/Classes/ScrnCrossbuzzsawBlade.uc) tho, we have a working solution.
 
 `KFMod/CrossBuzzsawBlade.uc`
-```cpp
+```clike
 #133
 simulated function PostNetReceive()
 {
@@ -79,7 +79,7 @@ function Timer()
 
 Now start to add our new destroy function to `OnWall` state. And force replication there aswell.
 
-```cpp
+```clike
 simulated state OnWall
 {
   ...
@@ -107,7 +107,7 @@ simulated state OnWall
 2. Add a timer to shut up AmbientSound.
 
 `KFMod/CrossBuzzsawBlade.uc`
-```cpp
+```clike
 // add our shutup float
 var float ShutMeUpTime;
 
@@ -141,7 +141,7 @@ defaultproperties
 4. If you don't want them to despawn (concerns about low ammo pool, etc) then simply add this code for level cleanup:
 
 `KFMod/KFGameType.uc` -> `State MatchInProgress` -> `#2250: CloseShops()`:
-```cpp
+```clike
 local CrossbuzzsawBlade CrossbuzzsawBlade;
 
 foreach DynamicActors(class'CrossbuzzsawBlade', CrossbuzzsawBlade)

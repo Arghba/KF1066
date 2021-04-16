@@ -12,7 +12,7 @@ No restrictions for dosh tossing over a short period of time results in the foll
 
 `KFMod/KFPawn.uc#2964`
 
-```cpp
+```clike
 exec function TossCash( int Amount )
 {
   ...
@@ -78,7 +78,7 @@ Proposed fix:
 
 `KFMod/KFPawn.uc`
 
-```cpp
+```clike
 var float AllowedTossCashTime;
 
 ...
@@ -105,7 +105,7 @@ If you want this completely fixed, you should restrict players to have no more t
 - Simply raise the tossing timeout to `0.35f`.
 - Additionally restrict tossing to 25 pickups per 8.5 seconds window.
 
-```cpp
+```clike
   var float AllowedTossCashTime, WindowEndTossCashTime;
   var byte WindowTossCashCount;
 

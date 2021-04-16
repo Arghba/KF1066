@@ -16,7 +16,7 @@
 
 `KFMod/HealingProjectile.uc`
 1. ==============
-```cpp
+```clike
 #70
 simulated function PostNetReceive()
 {
@@ -48,7 +48,7 @@ simulated function Timer()
 ```
 
 1.2. ==============
-```cpp
+```clike
 #241
 simulated function ProcessTouch(Actor Other, Vector HitLocation)
 {
@@ -89,7 +89,7 @@ simulated function ProcessTouch(Actor Other, Vector HitLocation)
 ```
 
 3. ==============
-```cpp
+```clike
 // why need to shake nearby players? make this a stub function
 function ShakeView()
 {
@@ -97,7 +97,7 @@ function ShakeView()
 ```
 
 4. ==============
-```cpp
+```clike
 defaultproperties
 {
   // set to 0

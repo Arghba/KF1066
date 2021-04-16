@@ -9,7 +9,7 @@ Currently you can not change game lenght (Short, Mid, Long) from map vote, only 
 ### Proposed Solution
 
 `KFMod/KFGameType.uc#658`
-```cpp
+```clike
 event InitGame( string Options, out string Error )
 {
   ...
@@ -40,7 +40,7 @@ lines in logs. Happens on every game.
 ### Proposed Solution
 
 `KFMod/KFPawn.uc#190`
-```cpp
+```clike
 simulated function PostBeginPlay()
 {
   Super(UnrealPawn).PostBeginPlay();
@@ -52,7 +52,7 @@ simulated function PostBeginPlay()
 ```
 
 `KFMod/KFPawn.uc#3985`
-```cpp
+```clike
 function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 {
   ...
@@ -72,7 +72,7 @@ function Sound GetSound(xPawnSoundGroup.ESoundType soundType)
 ### Proposed Solution
 
 `KFMod/KFWeaponPickup.uc#412: Destroyed()` add a check for `Inventory != none`.
-```cpp
+```clike
 function Destroyed()
 {
   if ( bDropped && Inventory != none && KFGameType(Level.Game) != none )
@@ -92,7 +92,7 @@ Its very frustrating when you pick up your own gun after recent wipe and find ou
 
 We need to edit `GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)` function for `KFMod/KFWeapon.u#1557` and `KFMod/HuskGun.u#158`. It uses `bThrown` flag to check if it was thrown by player or not. But that flag is being set from `DropFrom(vector StartLocation)` and its `True` only if pawn has more than 0 health.. If we simply ignore that flag nothing will change (if we don't count this bugfix).
 
-```cpp
+```clike
 function GiveAmmo(int m, WeaponPickup WP, bool bJustSpawned)
 {
   ...
@@ -116,7 +116,7 @@ Happens because some zeds (`IgnoreActors`) get killed right after they get trace
 
 You need to add `IgnoreActors != none` check for all these classes `KFMod/DeagleFire.uc`, `Dual44MagnumFire.uc`, `DualDeagleFire.uc`, `DualMK23Fire.uc`, `Magnum44Fire.uc`, `MK23Fire.uc` inside `function DoTrace(Vector Start, Rotator Dir)`.
 
-```cpp
+```clike
 function DoTrace(Vector Start, Rotator Dir)
 {
   ...
@@ -141,7 +141,7 @@ If a lone player joins to empty server as a spectator / usual player and then le
 ### Proposed Solution
 
 Add an additional check to your `KFMod/KFGameType` -> `#4736: CheckEndGame(...)` so lobby state will be excluded.
-```cpp
+```clike
 function bool CheckEndGame(PlayerReplicationInfo Winner, string Reason)
 {
   ...
@@ -161,6 +161,6 @@ Some mods and old custom maps refer to this function inside `KFMod/KFGameType.uc
 
 Just add a stub function, so at least you won't crash.
 `KFMod/KFGameType.uc`
-```cpp.
+```clike.
 function NotifyGameEvent(int EventNumIn);
 ```

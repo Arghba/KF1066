@@ -16,7 +16,7 @@ Shooting pipes with certain weapons causes them to explode several times potenti
 
 Put this at the very top of `TakeDamage` method:
 
-```cpp
+```clike
   if (bTriggered)
     return;
 ```
@@ -55,7 +55,7 @@ Yet again, no checks inside `KFMod/PipeBombProjecile.uc#134 (function Timer)` ->
 
 ## Proposed solution
 
-```cpp
+```clike
 function Timer()
 {
   local bool bSameTeam;
@@ -89,7 +89,7 @@ The pipe's core is sunk inside some mesh and ray tracing done by `foreach Visibl
 
 Do ray tracing from half a meter higher than the pipe bomb's actual location.
 
-```cpp
+```clike
 function Timer()
 {
   local vector DetectLocation;
@@ -114,7 +114,7 @@ function Timer()
 
 Every pipe leaves the following log message on explode:
 
-```cpp
+```clike
 PipeBombProjectile KF-ThrillsChills.PipeBombProjectile (Function KFMod.PipeBombProjectile.Explode:005D) Accessed array 'ExplodeSounds' out of bounds (0/0)
 ```
 
@@ -124,7 +124,7 @@ PipeBombProjectile KF-ThrillsChills.PipeBombProjectile (Function KFMod.PipeBombP
 
 ## Proposed solution
 
-```cpp
+```clike
 defaultproperties
 {
   ExplodeSounds(0)=SoundGroup'Inf_Weapons.antitankmine.antitankmine_explode01'

@@ -12,7 +12,7 @@ Hand Grenades doesn't check for ammo count before doing fire effect. Meaning:
 
 `KFMod/FragFire.uc#123`
 
-```cpp
+```clike
 function DoFireEffect()
 {
   // no current ammo checks
@@ -40,7 +40,7 @@ All three cases can be easily fixed. And we can just call fast grenade tossing w
 
 `KFMod/FragFire.uc#123`
 
-```cpp
+```clike
 var float PrevAmmo;  // new variable
 
 function DoFireEffect()

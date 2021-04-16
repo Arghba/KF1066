@@ -21,7 +21,7 @@ Many authors don't use `WeaponLocker` aka Trader models (nigga or 3d printer) fo
 We need to add checks if we even have `WeaponLocker`s nearby and if there are none just skip their calls - trader sounds, reactions etc.
 
 `KFMod/ShopVolume.uc`
-```cpp
+```clike
 #18
 function Touch( Actor Other )
 {

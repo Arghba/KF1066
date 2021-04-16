@@ -11,7 +11,7 @@
 ## Exploits reasons
 
 1. `KFChar/ZombieSiren.uc#112 SpawnTwoShots()`
-```cpp
+```clike
 simulated function SpawnTwoShots()
 {
   // no checks if we are decapped or no
@@ -27,7 +27,7 @@ simulated function SpawnTwoShots()
 3. Crawler jumps very fast and his pawn is not being destroyed that quick to make the transition smooth.
 4. `KFMod/KFMonster.uc#2631 TakeDamage()`
 
-```cpp
+```clike
 function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIndex )
 {
   ...
@@ -45,7 +45,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 
 5. `KFMod/FleshPoundAvoidArea.uc#41`
 
-```cpp
+```clike
 function bool RelevantTo(Pawn P)
 {
   // no zed health / specie check
@@ -114,7 +114,7 @@ Warning: ZombieHusk_STANDARD KF-Westlondon.ZombieHusk_STANDARD (Function KFMod.K
 
 `KFChar/ZombieSiren.uc#112 SpawnTwoShots()`
 
-```cpp
+```clike
 simulated function SpawnTwoShots()
 {
   if (bZapped || bDecapitated)
@@ -127,7 +127,7 @@ simulated function SpawnTwoShots()
 
 And edit `ZombieDying` state so it won't let sirens to do any animation / damage, etc (well since she's dead...).
 
-```cpp
+```clike
 State ZombieDying
 {
 ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, Falling, BreathTimer, Died, RangedAttack, SpawnTwoShots;
@@ -137,7 +137,7 @@ ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, 
 2. Edit `ZombieDying` state so it won't let husks to do any animatin, damage, etc (well since she's dead...).
 `KFChar/ZombieHusk`
 
-```cpp
+```clike
 State ZombieDying
 {
 ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, Falling, BreathTimer, Died, RangedAttack, SpawnTwoShots;
@@ -148,7 +148,7 @@ ignores AnimEnd, Trigger, Bump, HitWall, HeadVolumeChange, PhysicsVolumeChange, 
 
 `KFChar/ZombieCrawler`
 
-```cpp
+```clike
 simulated function PlayDying(class<DamageType> DamageType, vector HitLoc)
 {
   Super.PlayDying(DamageType, HitLoc);
@@ -186,7 +186,7 @@ final function DisablePawnCollision()
 
 `KFMod/KFMonster.uc#2631 TakeDamage()`
 
-```cpp
+```clike
 function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector momentum, class<DamageType> damageType, optional int HitIndex)
 {
   ...
@@ -205,7 +205,7 @@ function TakeDamage(int Damage, Pawn instigatedBy, Vector hitlocation, Vector mo
 
 `KFMod/FleshPoundAvoidArea.uc#41`
 
-```cpp
+```clike
 function bool RelevantTo(Pawn P)
 {
   if (KFMonst != none && KFMonst.Health >= 1500) // or other suitable value to exclude buffy zeds
@@ -219,7 +219,7 @@ function bool RelevantTo(Pawn P)
 
 7. Firstly for `KFMod/KFMonster.uc#776`
 
-```cpp
+```clike
 // Setters for extra collision cylinders
 simulated function ToggleAuxCollision(bool newbCollision)
 {
@@ -233,7 +233,7 @@ simulated function ToggleAuxCollision(bool newbCollision)
 
 And for `KFChar/ZombieHusk.uc#155` add `!= none` checks
 
-```cpp
+```clike
 function SpawnTwoShots()
 {
   ...
